@@ -1,0 +1,17 @@
+services:
+  kitchen-label:
+    build: .
+    container_name: kitchen-label
+    ports:
+      - "8080:8080"          # 宿主机端口:容器端口，API 地址为 http://localhost:8080
+    environment:
+      PORT: 8080             # 服务监听端口（容器内）
+      DB_PATH: /data/kitchen.db
+    volumes:
+      - kitchen-data:/data   # SQLite 数据持久化
+    # 启动时安装依赖并初始化数据库、启动服务
+    command: sh -c "pip install --no-cache-dir -r requirements.txt && python -m app.main"
+    restart: unless-stopped
+
+volumes:
+  kitchen-data:
