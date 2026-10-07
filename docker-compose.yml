@@ -1,0 +1,17 @@
+services:
+  allergen-labels:
+    build: .
+    image: allergen-label-service
+    container_name: allergen-labels
+    ports:
+      - "8000:8000"
+    environment:
+      DB_PATH: /data/app.db
+      HOST: 0.0.0.0
+      PORT: "8000"
+    volumes:
+      - allergen-data:/data
+    restart: unless-stopped
+
+volumes:
+  allergen-data:
